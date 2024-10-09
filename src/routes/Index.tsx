@@ -12,6 +12,7 @@ import {
 } from "@/components/CardsContent";
 import { ExpandableCard, ExpandedCard } from "@/components/ExpandableCards";
 import { HEIGHT_RESTANTE } from "@/constants";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import {
   Box,
   Divider,
@@ -83,6 +84,7 @@ export default function Index() {
   ];
 
   const primaryColor = useMemo(() => theme.palette.primary.main, [theme]);
+  const secondaryColor = useMemo(() => theme.palette.secondary.main, [theme]);
   const bgColorPaper = useMemo(() => theme.palette.background.paper, [theme]);
 
   useEffect(() => {
@@ -344,11 +346,14 @@ export default function Index() {
       <Divider />
       <motion.div
         style={{
-          height: HEIGHT_RESTANTE,
+          height: "auto",
+          minHeight: HEIGHT_RESTANTE,
           position: "relative",
           display: "flex",
-          justifyContent: "center",
+          flexDirection: "column",
+          justifyContent: "start",
           alignItems: "center",
+          paddingBottom: "50px",
         }}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -357,7 +362,7 @@ export default function Index() {
         <Stack
           id={"activities-stack"}
           width={"100%"}
-          height={"100%"}
+          height={"auto"}
           justifyContent={"center"}
           alignItems={"center"}
           padding={"100px 50px 0 50px"}
@@ -374,13 +379,14 @@ export default function Index() {
               Entrena tu cuerpo con nuestras actividades.
             </Typography>
           </motion.span>
-          <Grid container width={"100%"} height={"100%"} columnSpacing={5}>
-            <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+          <Grid container width={"100%"} height={"100%"} spacing={5}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <motion.div
                 style={{
+                  position: "relative",
                   display: "flex",
                   flexDirection: "column",
-                  padding: "10px",
+                  padding: "15px",
                   border: `1px solid ${primaryColor}`,
                   borderRadius: "25px",
                 }}
@@ -391,11 +397,29 @@ export default function Index() {
                 }}
               >
                 <Typography>Gimnasio mixto</Typography>
+                <Icon
+                  icon="mdi:weight-lifter"
+                  style={{
+                    position: "absolute",
+                    top: "15px",
+                    right: "25px",
+                    color: secondaryColor,
+                  }}
+                />
+                <Box height={"25px"} />
+                <Typography>
+                  El gimnasio ofrece un espacio integral dedicado al bienestar
+                  físico y mental. Con equipos de alta calidad, instalaciones
+                  modernas y un enfoque personalizado, promovemos un ambiente de
+                  entrenamiento seguro y motivador que fomenta hábitos
+                  saludables y mejora tu calidad de vida.
+                </Typography>
               </motion.div>
             </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <motion.div
                 style={{
+                  position: "relative",
                   display: "flex",
                   flexDirection: "column",
                   padding: "10px",
@@ -409,11 +433,29 @@ export default function Index() {
                 }}
               >
                 <Typography>Gimnasia artistica</Typography>
+                <Icon
+                  icon="material-symbols:sports-gymnastics"
+                  style={{
+                    position: "absolute",
+                    top: "15px",
+                    right: "25px",
+                    color: secondaryColor,
+                  }}
+                />
+                <Box height={"25px"} />
+                <Typography>
+                  La gimnasia artística es una disciplina que combina fuerza,
+                  flexibilidad y coordinación, donde las niñas desarrollan
+                  habilidades físicas y mentales a través de movimientos
+                  precisos y acrobáticos, fomentando la confianza y el control
+                  corporal.
+                </Typography>
               </motion.div>
             </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <motion.div
                 style={{
+                  position: "relative",
                   display: "flex",
                   flexDirection: "column",
                   padding: "10px",
@@ -427,11 +469,28 @@ export default function Index() {
                 }}
               >
                 <Typography>Boxeo</Typography>
+                <Icon
+                  icon="ri:boxing-fill"
+                  style={{
+                    position: "absolute",
+                    top: "15px",
+                    right: "25px",
+                    color: secondaryColor,
+                  }}
+                />
+                <Box height={"25px"} />
+                <Typography>
+                  Deporte de combate que mejora la resistencia física, agilidad
+                  y fuerza a través de movimientos técnicos de defensa y ataque.
+                  Ideal para quienes buscan desarrollar habilidades físicas,
+                  autocontrol y disciplina.
+                </Typography>
               </motion.div>
             </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <motion.div
                 style={{
+                  position: "relative",
                   display: "flex",
                   flexDirection: "column",
                   padding: "10px",
@@ -445,9 +504,134 @@ export default function Index() {
                 }}
               >
                 <Typography>Kungfu</Typography>
+                <Icon
+                  icon="mdi:karate"
+                  style={{
+                    position: "absolute",
+                    top: "15px",
+                    right: "25px",
+                    color: secondaryColor,
+                  }}
+                />
+                <Box height={"25px"} />
+                <Typography>
+                  Antiguo arte marcial chino que combina técnicas de defensa
+                  personal con un enfoque en el equilibrio mental y físico.
+                  Desarrolla concentración, autocontrol y respeto a través de un
+                  riguroso entrenamiento.
+                </Typography>
               </motion.div>
             </Grid>
           </Grid>
+        </Stack>
+      </motion.div>
+      <Divider />
+      <motion.div
+        ref={clasesRef}
+        style={{
+          height: HEIGHT_RESTANTE,
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Stack
+          id={"activities-stack"}
+          width={"100%"}
+          height={"100%"}
+          justifyContent={"start"}
+          alignItems={"center"}
+          gap={"50px"}
+          padding={"50px"}
+          boxSizing={"border-box"}
+        >
+          <motion.span whileHover={{ y: -10 }}>
+            <Typography
+              id={"activities-text"}
+              variant="h5"
+              component={"p"}
+              textAlign={"center"}
+            >
+              Ven y visitanos
+            </Typography>
+          </motion.span>
+          <Stack direction={"row"} width={"100%"} gap={"25px"}>
+            <Stack width={"50%"} gap={"50px"} justifyContent={"center"}>
+              <motion.span whileHover={{ y: -5 }}>
+                <Typography textAlign={"center"}>
+                  Instalaciones donde se imparten las clases
+                </Typography>
+              </motion.span>
+              <Stack direction={"row"} width={"100%"} gap={"25px"}>
+                <Stack justifyContent={"center"} gap={"10px"}>
+                  <motion.span whileHover={{ y: -5 }}>
+                    <Typography>Coahuila #7</Typography>
+                  </motion.span>
+                  <motion.span whileHover={{ y: -5 }}>
+                    <Typography>Colonia Bohemia</Typography>
+                  </motion.span>
+                  <motion.span whileHover={{ y: -5 }}>
+                    <Typography>Minatitlán, Ver.</Typography>
+                  </motion.span>
+                </Stack>
+                <motion.div
+                  whileHover={{
+                    y: -5,
+                  }}
+                >
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d237.1713756216613!2d-94.55790292611373!3d17.9907360291187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ea280484fb8b61%3A0x87611b23ed3a9676!2sCENTRO%20DE%20APRENDIZAJE%20DE%20IDIOMAS%20(CADI)!5e0!3m2!1ses!2smx!4v1728446852746!5m2!1ses!2smx"
+                    width="400"
+                    height="300"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </motion.div>
+              </Stack>
+            </Stack>
+            <Divider orientation="vertical" />
+            <Stack width={"50%"} gap={"50px"} justifyContent={"center"}>
+              <motion.span whileHover={{ y: -5 }}>
+                <Typography textAlign={"center"}>
+                  Instalaciones del polideportivo
+                </Typography>
+              </motion.span>
+              <Stack direction={"row"} width={"100%"} gap={"25px"}>
+                <Stack justifyContent={"center"} gap={"10px"}>
+                  <motion.span whileHover={{ y: -5 }}>
+                    <Typography>Porfirio Díaz #30</Typography>
+                  </motion.span>
+                  <motion.span whileHover={{ y: -5 }}>
+                    <Typography>Colonia 20 de noviembre</Typography>
+                  </motion.span>
+                  <motion.span whileHover={{ y: -5 }}>
+                    <Typography>Minatitlán, Ver.</Typography>
+                  </motion.span>
+                </Stack>
+                <motion.div
+                  whileHover={{
+                    y: -5,
+                  }}
+                >
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1897.3710049732904!2d-94.55902945382181!3d17.9907360291187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ea280484fb8b61%3A0x87611b23ed3a9676!2sCENTRO%20DE%20APRENDIZAJE%20DE%20IDIOMAS%20(CADI)!5e0!3m2!1ses!2smx!4v1728448003168!5m2!1ses!2smx"
+                    width="400"
+                    height="300"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </motion.div>
+              </Stack>
+            </Stack>
+          </Stack>
         </Stack>
       </motion.div>
     </>
