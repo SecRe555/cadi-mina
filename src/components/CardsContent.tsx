@@ -1,5 +1,12 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Box, Divider, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Activity from "./Activity";
 import { motion } from "framer-motion";
 
@@ -24,6 +31,7 @@ export function IdiomasCard() {
 }
 export function IdiomasExpandedCard() {
   const theme = useTheme();
+  const adjustExpandedCards = useMediaQuery("(max-width: 800px)");
   return (
     <>
       <Box height={"50px"}>
@@ -39,15 +47,16 @@ export function IdiomasExpandedCard() {
       <Stack
         width={"100%"}
         height={"calc(100% - 75px)"}
-        direction={"row"}
+        direction={adjustExpandedCards ? "column" : "row"}
         gap="25px"
       >
         <motion.div
           style={{
-            width: "50%",
+            width: adjustExpandedCards ? "100%" : "50%",
             height: "100%",
             borderRadius: "25px",
             padding: "15px",
+            overflowY: "auto",
           }}
           whileInView={{
             y: -5,
@@ -81,10 +90,11 @@ export function IdiomasExpandedCard() {
         </motion.div>
         <motion.div
           style={{
-            width: "50%",
+            width: adjustExpandedCards ? "100%" : "50%",
             height: "100%",
             borderRadius: "25px",
             padding: "15px",
+            overflowY: "auto",
           }}
           whileInView={{
             y: -5,
@@ -123,7 +133,7 @@ export function IdiomasExpandedCard() {
 
 /*
 <motion.div
-          style={{ width: "50%", height: "100%", borderRadius: "25px" }}
+          style={{ width: adjustExpandedCards ? "100%" : "50%", height: "100%", borderRadius: "25px" }}
           whileHover={{
             y: -5,
             boxShadow: "0 5px 10px rgba(0, 0, 0, 0.25)",
@@ -133,6 +143,7 @@ export function IdiomasExpandedCard() {
 */
 export function RefuerzoAcademicoCard() {
   const theme = useTheme();
+
   return (
     <>
       <Typography display={"flex"} alignItems={"center"} gap={"25px"}>
@@ -155,6 +166,8 @@ export function RefuerzoAcademicoCard() {
 }
 export function RefuerzoAcademicoExpandedCard() {
   const theme = useTheme();
+  const adjustExpandedCards = useMediaQuery("(max-width: 800px)");
+
   return (
     <>
       <Box height={"50px"}>
@@ -170,15 +183,16 @@ export function RefuerzoAcademicoExpandedCard() {
       <Stack
         width={"100%"}
         height={"calc(100% - 75px)"}
-        direction={"row"}
+        direction={adjustExpandedCards ? "column" : "row"}
         gap="25px"
       >
         <motion.div
           style={{
-            width: "50%",
+            width: adjustExpandedCards ? "100%" : "50%",
             height: "100%",
             borderRadius: "25px",
             padding: "15px",
+            overflowY: "auto",
           }}
           whileInView={{
             y: -5,
@@ -211,10 +225,11 @@ export function RefuerzoAcademicoExpandedCard() {
         </motion.div>
         <motion.div
           style={{
-            width: "50%",
+            width: adjustExpandedCards ? "100%" : "50%",
             height: "100%",
             borderRadius: "25px",
             padding: "15px",
+            overflowY: "auto",
           }}
           whileInView={{
             y: -5,
@@ -251,6 +266,7 @@ export function RefuerzoAcademicoExpandedCard() {
 
 export function ArtesCard() {
   const theme = useTheme();
+
   return (
     <>
       <Typography display={"flex"} alignItems={"center"} gap={"25px"}>
@@ -270,6 +286,8 @@ export function ArtesCard() {
 }
 export function ArtesExpandedCard() {
   const theme = useTheme();
+  const adjustExpandedCards = useMediaQuery("(max-width: 800px)");
+
   return (
     <>
       <Box height={"50px"}>
@@ -285,15 +303,16 @@ export function ArtesExpandedCard() {
       <Stack
         width={"100%"}
         height={"calc(100% - 75px)"}
-        direction={"row"}
+        direction={adjustExpandedCards ? "column" : "row"}
         gap="25px"
       >
         <motion.div
           style={{
-            width: "50%",
+            width: adjustExpandedCards ? "100%" : "50%",
             height: "100%",
             borderRadius: "25px",
             padding: "15px",
+            overflowY: "auto",
           }}
           whileInView={{
             y: -5,
@@ -325,7 +344,7 @@ export function ArtesExpandedCard() {
         </motion.div>
         <motion.div
           style={{
-            width: "50%",
+            width: adjustExpandedCards ? "100%" : "50%",
             height: "100%",
             borderRadius: "25px",
             padding: "15px",
@@ -386,6 +405,7 @@ export function ArtesExpandedCard() {
 
 export function DanzasCard() {
   const theme = useTheme();
+
   return (
     <>
       <Typography display={"flex"} alignItems={"center"} gap={"25px"}>
@@ -402,6 +422,8 @@ export function DanzasCard() {
 }
 export function DanzasExpandedCard() {
   const theme = useTheme();
+  const adjustExpandedCards = useMediaQuery("(max-width: 800px)");
+
   return (
     <>
       <Box height={"50px"}>
@@ -417,12 +439,12 @@ export function DanzasExpandedCard() {
       <Stack
         width={"100%"}
         height={"calc(100% - 75px)"}
-        direction={"row"}
+        direction={adjustExpandedCards ? "column" : "row"}
         gap="25px"
       >
         <motion.div
           style={{
-            width: "50%",
+            width: adjustExpandedCards ? "100%" : "50%",
             height: "100%",
             borderRadius: "25px",
             padding: "15px",
@@ -469,7 +491,7 @@ export function DanzasExpandedCard() {
         </motion.div>
         <motion.div
           style={{
-            width: "50%",
+            width: adjustExpandedCards ? "100%" : "50%",
             height: "100%",
             borderRadius: "25px",
             padding: "15px",
@@ -537,6 +559,8 @@ export function DeporteCard() {
 }
 export function DeportesExpandedCard() {
   const theme = useTheme();
+  const breakTitleRow = useMediaQuery("(max-width: 350px)");
+  const adjustExpandedCards = useMediaQuery("(max-width: 800px)");
   return (
     <>
       <Box height={"50px"}>
@@ -545,22 +569,26 @@ export function DeportesExpandedCard() {
             icon="icon-park-solid:sport"
             color={theme.palette.secondary.main}
           />
-          Actividades físicas
+          Actividades{breakTitleRow && <br />} físicas
         </Typography>
       </Box>
-      <Divider sx={{ marginBottom: "25px" }} />
+      <Divider
+        sx={{ marginTop: breakTitleRow ? "25px" : "0", marginBottom: "25px" }}
+      />
       <Stack
         width={"100%"}
         height={"calc(100% - 75px)"}
         direction={"row"}
         justifyContent={"center"}
+        paddingBottom={"25px"}
       >
         <motion.div
           style={{
-            width: "65%",
+            width: adjustExpandedCards ? "90%" : "65%",
             height: "100%",
             borderRadius: "25px",
             padding: "15px",
+            overflowY: "auto",
           }}
           whileInView={{
             y: -5,

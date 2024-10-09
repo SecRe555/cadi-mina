@@ -2,7 +2,7 @@ import { Button, useTheme } from "@mui/material";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import useUtils from "@/states/utilsState";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 interface ExpandableCardsProps {
   id: string;
@@ -16,30 +16,9 @@ export function ExpandableCard({
   children,
 }: ExpandableCardsProps) {
   const { setIsMainScrolleable } = useUtils();
-  const cardRef = useRef<HTMLDivElement | null>(null);
-
-  // Función para verificar si el usuario ha hecho scroll más allá de la tarjeta
-  const checkIfCardIsOutOfView = () => {
-    if (cardRef.current) {
-      const rect = cardRef.current.getBoundingClientRect();
-      // Si la tarjeta ya no está visible (fuera del viewport), la cerramos
-      if (rect.bottom < 0 || rect.top > window.innerHeight) {
-        setSelectedId(null);
-      }
-    }
-  };
-
-  // Añadimos el evento de scroll
-  useEffect(() => {
-    window.addEventListener("scroll", checkIfCardIsOutOfView);
-    return () => {
-      window.removeEventListener("scroll", checkIfCardIsOutOfView);
-    };
-  }, []);
 
   return (
     <motion.div
-      ref={cardRef}
       layoutId={id}
       style={{
         display: "flex",
@@ -67,9 +46,44 @@ export function ExpandedCard({
 }: ExpandableCardsProps) {
   const theme = useTheme();
   const { setIsMainScrolleable } = useUtils();
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true); // El elemento es visible
+          } else {
+            setIsVisible(false); // El elemento ha salido del viewport
+            setSelectedId(null);
+          }
+        });
+      },
+      {
+        root: null, // Usar el viewport del navegador
+        rootMargin: "0px",
+        threshold: 0.1, // Disparar cuando el 10% del elemento sea visible
+      }
+    );
+
+    const currentElement = cardRef.current;
+    if (currentElement) {
+      observer.observe(currentElement); // Observa el elemento
+    }
+
+    // Limpieza cuando el componente se desmonte
+    return () => {
+      if (currentElement) {
+        observer.unobserve(currentElement); // Deja de observar el elemento
+      }
+    };
+  }, []);
 
   return (
     <motion.div
+      ref={cardRef}
       layoutId={id}
       style={{
         position: "fixed",

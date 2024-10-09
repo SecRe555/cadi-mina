@@ -20,11 +20,12 @@ import {
   Tab,
   Tabs,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 type ArtesCardsKeys =
   | "idiomas"
@@ -54,7 +55,6 @@ export default function Index() {
   const handleChangeTab = (_: React.SyntheticEvent, newTabIndex: number) => {
     setTabIndex(newTabIndex);
   };
-  const { scrollY } = useScroll();
   const clasesRef = useRef<HTMLDivElement | null>(null);
 
   const [artesSelectedId, setArtesSelectedId] = useState<string | null>(null);
@@ -85,24 +85,23 @@ export default function Index() {
 
   const primaryColor = useMemo(() => theme.palette.primary.main, [theme]);
   const secondaryColor = useMemo(() => theme.palette.secondary.main, [theme]);
-  const bgColorPaper = useMemo(() => theme.palette.background.paper, [theme]);
 
-  useEffect(() => {
-    // Función para cerrar las tarjetas si el scroll supera una cierta cantidad
-    const handleScroll = () => {
-      if (clasesRef.current && artesSelectedId) {
-        const rect = clasesRef.current.getBoundingClientRect();
-        if (rect.top > rect.height || rect.bottom < 0) {
-          console.log("Se fue por arriba");
-          setArtesSelectedId(null);
-        }
-      }
-    };
-
-    // Escucha el scroll
-    const unsubscribe = scrollY.onChange(handleScroll);
-    return () => unsubscribe(); // Limpieza del evento
-  }, [scrollY]);
+  const changePresentationDivWidth = useMediaQuery("(max-width: 800px)");
+  const changePresentationDivFontSize = useMediaQuery("(max-width: 545px)");
+  const changeWhoweareDirection = useMediaQuery("(max-width: 1200px)");
+  const addWhowearePadding = useMediaQuery("(max-width: 1070px)");
+  const changeWhoweareFontSize = useMediaQuery("(max-width: 525px)");
+  const reduceWhowearePadding = useMediaQuery("(max-width: 380px)");
+  const changeClasesh5Variant = useMediaQuery("(max-width: 810px)");
+  const changeClasesh6Size = useMediaQuery("(max-width: 345px)");
+  const changeClasesJustify = useMediaQuery("(max-width: 650px)");
+  const changeDeportesh5Variant = useMediaQuery("(max-width: 590px)");
+  const adjustDeportesDescription = useMediaQuery("(max-width: 500px)");
+  const reduceDeportesPadding = useMediaQuery("(max-width: 900px)");
+  const changeContactoh5Size = useMediaQuery("(max-width: 470px)");
+  const changeMapToColumn = useMediaQuery("(max-width: 1075px)");
+  const changeDirectionsToColumn = useMediaQuery("(max-width: 700px)");
+  const changeMapSize = useMediaQuery("(max-width: 375px)");
 
   return (
     <>
@@ -133,6 +132,7 @@ export default function Index() {
         />
         <motion.div
           style={{
+            width: changePresentationDivWidth ? "75%" : "auto",
             padding: "25px",
             backgroundColor: "rgba(255, 255, 255, 0.4)",
             textAlign: "center",
@@ -147,10 +147,16 @@ export default function Index() {
             delay: 3,
           }}
         >
-          <Typography variant="h4" component={"h2"}>
+          <Typography
+            variant={changePresentationDivFontSize ? "body1" : "h4"}
+            fontWeight={changePresentationDivFontSize ? "600" : "normal"}
+            component={"h2"}
+          >
             CADI Minatitlán
           </Typography>
-          <Typography>
+          <Typography
+            variant={changePresentationDivFontSize ? "body2" : "body1"}
+          >
             Accede a un espacio de aprendizaje o un ambiente activo, ¡tú
             decides!
           </Typography>
@@ -158,10 +164,10 @@ export default function Index() {
       </motion.div>
       <motion.div
         style={{
-          height: HEIGHT_RESTANTE,
+          minHeight: HEIGHT_RESTANTE,
           position: "relative",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: addWhowearePadding ? "start" : "center",
           alignItems: "center",
         }}
         initial={{ opacity: 0 }}
@@ -169,20 +175,20 @@ export default function Index() {
         transition={{ duration: 0.5, delay: 0.5 }}
       >
         <Stack
-          direction={"row"}
+          direction={changeWhoweareDirection ? "column" : "row"}
           width={"100%"}
           minHeight={"100%"}
           justifyContent={"space-between"}
           alignItems={"center"}
           gap={"50px"}
-          paddingX={"50px"}
+          paddingX={changeWhoweareFontSize ? "25px" : "50px"}
+          paddingY={addWhowearePadding ? "35px" : "0"}
         >
           <motion.div
             style={{
               width: "100%",
               height: "100%",
               display: "flex",
-              justifyContent: "center",
               alignItems: "center",
               padding: "10px",
               borderRadius: 25,
@@ -192,11 +198,19 @@ export default function Index() {
               boxShadow: "0px 5px 10px rgba(0,0,0,0.25)",
             }}
           >
-            <Stack gap={"25px"} paddingX={"30px"}>
-              <Typography variant="h6" textAlign={"center"}>
+            <Stack
+              gap={"25px"}
+              paddingX={reduceWhowearePadding ? "15px" : "30px"}
+            >
+              <Typography
+                variant={reduceWhowearePadding ? "body1" : "h6"}
+                component={"p"}
+                textAlign={"center"}
+                fontWeight={reduceWhowearePadding ? "600" : "400"}
+              >
                 ¿Quiénes somos?
               </Typography>
-              <Typography>
+              <Typography variant={changeWhoweareFontSize ? "body2" : "body1"}>
                 Somos un Centro multidisciplinario de atención personalizada
                 donde encontrarás actividades educativas, deportivas y de artes
                 buscando el equilibrio físico, intelectual, cultural y artístico
@@ -220,7 +234,10 @@ export default function Index() {
               boxShadow: "0px 5px 10px rgba(0,0,0,0.25)",
             }}
           >
-            <Stack gap={"25px"} paddingX={"30px"}>
+            <Stack
+              gap={"25px"}
+              paddingX={reduceWhowearePadding ? "15px" : "30px"}
+            >
               <Tabs value={tabIndex} onChange={handleChangeTab}>
                 <Tab label={"Misión"}></Tab>
                 <Tab label={"Visión"}></Tab>
@@ -241,7 +258,9 @@ export default function Index() {
                       exit={{ opacity: 0.5, height: 0.1 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <Typography>
+                      <Typography
+                        variant={changeWhoweareFontSize ? "body2" : "body1"}
+                      >
                         Nuestro objetivo es vincular la educación, la formación,
                         la cultura, el deporte y las artes para brindar
                         excelencia en cada una de nuestras áreas. En el ámbito
@@ -264,7 +283,9 @@ export default function Index() {
                       exit={{ opacity: 0.5, height: 0.1 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <Typography>
+                      <Typography
+                        variant={changeWhoweareFontSize ? "body2" : "body1"}
+                      >
                         Nuestro propósito es consolidar y desarrollar el acervo
                         educativo, cultural, personal y profesional de nuestros
                         estudiantes, brindándoles herramientas que les permitan
@@ -288,7 +309,7 @@ export default function Index() {
       <motion.div
         ref={clasesRef}
         style={{
-          height: HEIGHT_RESTANTE,
+          minHeight: HEIGHT_RESTANTE,
           position: "relative",
           display: "flex",
           justifyContent: "center",
@@ -302,23 +323,37 @@ export default function Index() {
           id={"activities-stack"}
           width={"100%"}
           height={"100%"}
-          justifyContent={"center"}
+          justifyContent={changeClasesJustify ? "start" : "center"}
           alignItems={"center"}
-          padding={"100px 50px 0 50px"}
+          paddingX={"25px"}
+          paddingY={"50px"}
           gap={"50px"}
           boxSizing={"border-box"}
         >
           <motion.span whileHover={{ y: -10 }}>
             <Typography
               id={"activities-text"}
-              variant="h5"
+              variant={
+                changeClasesh5Variant
+                  ? changeClasesh6Size
+                    ? "body1"
+                    : "h6"
+                  : "h5"
+              }
+              fontWeight={
+                changeClasesh5Variant
+                  ? changeClasesh6Size
+                    ? "600"
+                    : "500"
+                  : "400"
+              }
               component={"p"}
               textAlign={"center"}
             >
               Aumenta tus conocimientos con nuestras clases.
             </Typography>
           </motion.span>
-          <Grid container width={"100%"} height={"100%"} columnSpacing={5}>
+          <Grid container width={"100%"} height={"100%"} spacing={5}>
             {artesItems.map((item: ArtesItems) => (
               <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
                 <ExpandableCard id={item.id} setSelectedId={setArtesSelectedId}>
@@ -360,19 +395,26 @@ export default function Index() {
         transition={{ duration: 0.5 }}
       >
         <Stack
-          id={"activities-stack"}
           width={"100%"}
           height={"auto"}
           justifyContent={"center"}
           alignItems={"center"}
-          padding={"100px 50px 0 50px"}
+          paddingX={reduceDeportesPadding ? "25px" : "50px"}
+          paddingY={"50px"}
           gap={"50px"}
           boxSizing={"border-box"}
         >
           <motion.span whileHover={{ y: -10 }}>
             <Typography
               id={"activities-text"}
-              variant="h5"
+              variant={
+                changeDeportesh5Variant
+                  ? adjustDeportesDescription
+                    ? "body1"
+                    : "h6"
+                  : "h5"
+              }
+              fontWeight={adjustDeportesDescription ? "500" : "400"}
               component={"p"}
               textAlign={"center"}
             >
@@ -527,9 +569,8 @@ export default function Index() {
       </motion.div>
       <Divider />
       <motion.div
-        ref={clasesRef}
         style={{
-          height: HEIGHT_RESTANTE,
+          minHeight: HEIGHT_RESTANTE,
           position: "relative",
           display: "flex",
           justifyContent: "center",
@@ -540,7 +581,6 @@ export default function Index() {
         transition={{ duration: 0.5 }}
       >
         <Stack
-          id={"activities-stack"}
           width={"100%"}
           height={"100%"}
           justifyContent={"start"}
@@ -551,22 +591,35 @@ export default function Index() {
         >
           <motion.span whileHover={{ y: -10 }}>
             <Typography
-              id={"activities-text"}
-              variant="h5"
+              variant={changeContactoh5Size ? "h6" : "h5"}
               component={"p"}
               textAlign={"center"}
             >
               Ven y visitanos
             </Typography>
           </motion.span>
-          <Stack direction={"row"} width={"100%"} gap={"25px"}>
-            <Stack width={"50%"} gap={"50px"} justifyContent={"center"}>
+          <Stack
+            direction={changeMapToColumn ? "column" : "row"}
+            width={"100%"}
+            gap={"25px"}
+          >
+            <Stack
+              width={changeMapToColumn ? "100%" : "50%"}
+              gap={"50px"}
+              justifyContent={"center"}
+            >
               <motion.span whileHover={{ y: -5 }}>
                 <Typography textAlign={"center"}>
                   Instalaciones donde se imparten las clases
                 </Typography>
               </motion.span>
-              <Stack direction={"row"} width={"100%"} gap={"25px"}>
+              <Stack
+                direction={changeDirectionsToColumn ? "column" : "row"}
+                width={"100%"}
+                gap={"25px"}
+                justifyContent={changeMapToColumn ? "space-evenly" : "start"}
+                textAlign={changeDirectionsToColumn ? "center" : "start"}
+              >
                 <Stack justifyContent={"center"} gap={"10px"}>
                   <motion.span whileHover={{ y: -5 }}>
                     <Typography>Coahuila #7</Typography>
@@ -579,14 +632,23 @@ export default function Index() {
                   </motion.span>
                 </Stack>
                 <motion.div
+                  style={
+                    changeDirectionsToColumn
+                      ? {
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                        }
+                      : undefined
+                  }
                   whileHover={{
                     y: -5,
                   }}
                 >
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d237.1713756216613!2d-94.55790292611373!3d17.9907360291187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ea280484fb8b61%3A0x87611b23ed3a9676!2sCENTRO%20DE%20APRENDIZAJE%20DE%20IDIOMAS%20(CADI)!5e0!3m2!1ses!2smx!4v1728446852746!5m2!1ses!2smx"
-                    width="400"
-                    height="300"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1220.6407368862097!2d-94.55785474404895!3d17.990672018379737!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ea280484fb8b61%3A0x87611b23ed3a9676!2sCENTRO%20DE%20APRENDIZAJE%20DE%20IDIOMAS%20(CADI)!5e0!3m2!1ses!2smx!4v1728498106515!5m2!1ses!2smx"
+                    width={changeMapSize ? "250" : "300"}
+                    height={changeMapSize ? "250" : "300"}
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
@@ -595,14 +657,23 @@ export default function Index() {
                 </motion.div>
               </Stack>
             </Stack>
-            <Divider orientation="vertical" />
-            <Stack width={"50%"} gap={"50px"} justifyContent={"center"}>
+            <Stack
+              width={changeMapToColumn ? "100%" : "50%"}
+              gap={"50px"}
+              justifyContent={"center"}
+            >
               <motion.span whileHover={{ y: -5 }}>
                 <Typography textAlign={"center"}>
                   Instalaciones del polideportivo
                 </Typography>
               </motion.span>
-              <Stack direction={"row"} width={"100%"} gap={"25px"}>
+              <Stack
+                direction={changeDirectionsToColumn ? "column" : "row"}
+                width={"100%"}
+                gap={"25px"}
+                justifyContent={changeMapToColumn ? "space-evenly" : "start"}
+                textAlign={changeDirectionsToColumn ? "center" : "start"}
+              >
                 <Stack justifyContent={"center"} gap={"10px"}>
                   <motion.span whileHover={{ y: -5 }}>
                     <Typography>Porfirio Díaz #30</Typography>
@@ -615,14 +686,23 @@ export default function Index() {
                   </motion.span>
                 </Stack>
                 <motion.div
+                  style={
+                    changeDirectionsToColumn
+                      ? {
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                        }
+                      : undefined
+                  }
                   whileHover={{
                     y: -5,
                   }}
                 >
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1897.3710049732904!2d-94.55902945382181!3d17.9907360291187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ea280484fb8b61%3A0x87611b23ed3a9676!2sCENTRO%20DE%20APRENDIZAJE%20DE%20IDIOMAS%20(CADI)!5e0!3m2!1ses!2smx!4v1728448003168!5m2!1ses!2smx"
-                    width="400"
-                    height="300"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1173.440479225842!2d-94.54842430020746!3d17.999942081690627!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ea28048488334b%3A0x3a3c02920b9ea5b7!2sCADI%20SPORT%20-%20Polideportivo!5e0!3m2!1ses!2smx!4v1728498230885!5m2!1ses!2smx"
+                    width={changeMapSize ? "250" : "300"}
+                    height={changeMapSize ? "250" : "300"}
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"

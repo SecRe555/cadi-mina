@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material";
 
-const PRIMARY_COLOR = "#3C428E";
-const SECONDARY_COLOR_LIGHT = "#E7333C";
+const PRIMARY_COLOR = "#005cff";
+const SECONDARY_COLOR_LIGHT = "#ff0037";
 const SECONDARY_COLOR_DARK = "#E7333C";
 
 const BG_COLOR_LIGHT = "#EEEEEE";
@@ -20,7 +20,7 @@ export const lightTheme = createTheme({
     background: { default: BG_COLOR_LIGHT, paper: BG_COLOR_CARDS_LIGHT },
   },
   typography: {
-    fontFamily: "Quicksand",
+    fontFamily: "Montserrat",
     fontSize: 18,
   },
   components: {
@@ -154,7 +154,7 @@ export const lightTheme = createTheme({
     MuiCssBaseline: {
       styleOverrides: `
         @font-face {
-          font-family: "Quicksand";
+          font-family: "Montserrat";
           font-style: normal;
           font-weight: 300;
           font-size: 24px;

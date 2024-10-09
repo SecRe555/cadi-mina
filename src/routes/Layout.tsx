@@ -1,7 +1,7 @@
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import useUtils from "@/states/utilsState";
-import { Stack, useTheme } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 export default function Layout() {
@@ -19,6 +19,7 @@ export default function Layout() {
         }}
       >
         <Banner />
+        <Box height={"75px"} />
         <Outlet />
         <Footer />
       </Stack>
