@@ -24,8 +24,9 @@ import {
   useTheme,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { AnimatePresence, motion, useScroll } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useRef, useState } from "react";
+import cadiImg from "@images/cadi_white.png";
 
 type ArtesCardsKeys =
   | "idiomas"
@@ -85,19 +86,26 @@ export default function Index() {
 
   const primaryColor = useMemo(() => theme.palette.primary.main, [theme]);
   const secondaryColor = useMemo(() => theme.palette.secondary.main, [theme]);
+  const bgColorPaper = useMemo(() => theme.palette.background.paper, [theme]);
 
   const changePresentationDivWidth = useMediaQuery("(max-width: 800px)");
   const changePresentationDivFontSize = useMediaQuery("(max-width: 545px)");
+  const changeCadiSize = useMediaQuery("(max-width: 650px)");
+  const reduceCadiSize = useMediaQuery("(max-width: 495px)");
+
   const changeWhoweareDirection = useMediaQuery("(max-width: 1200px)");
   const addWhowearePadding = useMediaQuery("(max-width: 1070px)");
   const changeWhoweareFontSize = useMediaQuery("(max-width: 525px)");
   const reduceWhowearePadding = useMediaQuery("(max-width: 380px)");
+
   const changeClasesh5Variant = useMediaQuery("(max-width: 810px)");
   const changeClasesh6Size = useMediaQuery("(max-width: 345px)");
   const changeClasesJustify = useMediaQuery("(max-width: 650px)");
+
   const changeDeportesh5Variant = useMediaQuery("(max-width: 590px)");
   const adjustDeportesDescription = useMediaQuery("(max-width: 500px)");
   const reduceDeportesPadding = useMediaQuery("(max-width: 900px)");
+
   const changeContactoh5Size = useMediaQuery("(max-width: 470px)");
   const changeMapToColumn = useMediaQuery("(max-width: 1075px)");
   const changeDirectionsToColumn = useMediaQuery("(max-width: 700px)");
@@ -132,9 +140,12 @@ export default function Index() {
         />
         <motion.div
           style={{
-            width: changePresentationDivWidth ? "75%" : "auto",
+            width: changePresentationDivWidth ? "85%" : "auto",
             padding: "25px",
-            backgroundColor: "rgba(255, 255, 255, 0.4)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
             textAlign: "center",
             backdropFilter: "blur(2px)",
             borderRadius: "25px",
@@ -143,23 +154,43 @@ export default function Index() {
           transition={{
             repeat: Infinity,
             duration: 2,
-            repeatDelay: 2,
+            repeatDelay: 1,
             delay: 3,
           }}
         >
-          <Typography
+          <Box
+            width={
+              changeCadiSize ? (reduceCadiSize ? "200px" : "300px") : "400px"
+            }
+            height={
+              changeCadiSize ? (reduceCadiSize ? "50px" : "75px") : "100px"
+            }
+            margin={"auto"}
+          >
+            <motion.img
+              src={cadiImg}
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+              whileHover={{ y: -10 }}
+            />
+          </Box>
+          {/* <Typography
             variant={changePresentationDivFontSize ? "body1" : "h4"}
             fontWeight={changePresentationDivFontSize ? "600" : "normal"}
             component={"h2"}
-          >
-            CADI Minatitlán
-          </Typography>
-          <Typography
-            variant={changePresentationDivFontSize ? "body2" : "body1"}
-          >
-            Accede a un espacio de aprendizaje o un ambiente activo, ¡tú
-            decides!
-          </Typography>
+          ></Typography> */}
+          <motion.span whileHover={{ y: -5 }}>
+            <Typography
+              variant={changePresentationDivFontSize ? "body2" : "body1"}
+              color={bgColorPaper}
+              fontWeight={"600"}
+            >
+              Accede a un espacio de aprendizaje o un ambiente activo, ¡tú
+              decides!
+            </Typography>
+          </motion.span>
         </motion.div>
       </motion.div>
       <motion.div
@@ -601,11 +632,11 @@ export default function Index() {
           <Stack
             direction={changeMapToColumn ? "column" : "row"}
             width={"100%"}
-            gap={"25px"}
+            gap={changeDirectionsToColumn ? "75px" : "25px"}
           >
             <Stack
               width={changeMapToColumn ? "100%" : "50%"}
-              gap={"50px"}
+              gap={changeDirectionsToColumn ? "15px" : "50px"}
               justifyContent={"center"}
             >
               <motion.span whileHover={{ y: -5 }}>
@@ -659,7 +690,7 @@ export default function Index() {
             </Stack>
             <Stack
               width={changeMapToColumn ? "100%" : "50%"}
-              gap={"50px"}
+              gap={changeDirectionsToColumn ? "15px" : "50px"}
               justifyContent={"center"}
             >
               <motion.span whileHover={{ y: -5 }}>

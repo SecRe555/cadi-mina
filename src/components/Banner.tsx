@@ -46,6 +46,8 @@ export default function Banner() {
 
   const bgColorPaper = useMemo(() => theme.palette.background.paper, []);
 
+  const minimizeImageSize = useMediaQuery("(max-width: 460px)");
+  const changeImageSize = useMediaQuery("(max-width: 550px)");
   const reduceNavFontSize = useMediaQuery("(max-width: 1200px)");
   const reduceImageSize = useMediaQuery("(max-width: 1100px)");
   const showMenuButton = useMediaQuery("(max-width: 1000px)");
@@ -64,11 +66,25 @@ export default function Banner() {
             justifyContent={"space-between"}
             width={"100%"}
             height={"100%"}
-            paddingX={"26px"}
+            paddingX={"25px"}
+            paddingRight={minimizeImageSize ? "0" : undefined}
             boxSizing={"border-box"}
           >
             <Stack direction={"row"} alignItems={"center"} gap={"25px"}>
-              <Box width={reduceImageSize ? "250px" : "350px"} height={"50px"}>
+              <Box
+                width={
+                  reduceImageSize
+                    ? minimizeImageSize
+                      ? "175px"
+                      : changeImageSize
+                      ? "250px"
+                      : showMenuButton
+                      ? "350px"
+                      : "250px"
+                    : "350px"
+                }
+                height={"50px"}
+              >
                 <motion.img
                   src={logo}
                   style={{
