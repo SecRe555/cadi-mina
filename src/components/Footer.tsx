@@ -9,14 +9,55 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import "./footer.css";
+import useUtils from "@/states/utilsState";
 
 const navMotionHover = { y: -5, scale: 1.05 };
 
 export default function Footer() {
   const theme = useTheme();
   const bgColorPaper = useMemo(() => theme.palette.background.paper, [theme]);
+  const { setSelectedId } = useUtils();
+
+  const [scrolling, setScrolling] = useState(false);
+  let timerId: NodeJS.Timeout | null = null; // Definimos timerId aquí para usarlo correctamente
+
+  const scrollToElement = (elementId: string, cardId: string) => {
+    const offset = 125;
+    const element = document.getElementById(cardId);
+    if (element) {
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+
+      setScrolling(true); // Inicia el scroll
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+
+      // Aquí monitoreamos cuando el scroll termina
+      const checkIfScrollFinished = () => {
+        if (scrolling) {
+          setScrolling(false);
+          if (timerId) {
+            clearTimeout(timerId); // Limpiamos el temporizador anterior si existe
+          }
+
+          const currentScrollY = window.scrollY;
+
+          timerId = setTimeout(() => {
+            if (window.scrollY === currentScrollY) {
+            }
+          }, 750);
+        } // 150 ms es un tiempo suficiente para verificar que el scroll ha parado
+      };
+
+      window.addEventListener("scroll", checkIfScrollFinished);
+    }
+  };
 
   const invertFooterDirections = useMediaQuery("(max-width: 800px");
   const convertClasesToColumn = useMediaQuery("(max-width: 490px");
@@ -50,6 +91,8 @@ export default function Footer() {
               {!invertFooterDirections && (
                 <Stack height={"100%"} justifyContent={"space-around"}>
                   <motion.a
+                    href="https://www.facebook.com/CADI.MINATITLAN/"
+                    target="_blank"
                     whileHover={{ scale: 1.25 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -68,6 +111,8 @@ export default function Footer() {
                     </Box>
                   </motion.a>
                   <motion.a
+                    href="https://www.instagram.com/cadi_minatitlan/"
+                    target="_blank"
                     whileHover={{ scale: 1.25 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -86,6 +131,8 @@ export default function Footer() {
                     </Box>
                   </motion.a>
                   <motion.a
+                    href="https://wa.me/529211413080?text=Quiero%20solicitar%20informes."
+                    target="_blank"
                     whileHover={{ scale: 1.25 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -126,7 +173,11 @@ export default function Footer() {
                   columnGap={invertFooterDirections ? "25px" : "15px"}
                   rowGap={invertFooterDirections ? "10px" : "auto"}
                 >
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() => scrollToElement("idiomas", "idiomas-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
@@ -135,7 +186,11 @@ export default function Footer() {
                       Ingles
                     </Typography>
                   </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() => scrollToElement("idiomas", "idiomas-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
@@ -144,7 +199,11 @@ export default function Footer() {
                       Frances
                     </Typography>
                   </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() => scrollToElement("artes", "artes-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
@@ -153,7 +212,11 @@ export default function Footer() {
                       Musica
                     </Typography>
                   </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() => scrollToElement("artes", "artes-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
@@ -162,7 +225,13 @@ export default function Footer() {
                       Dibujo y pintura
                     </Typography>
                   </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() =>
+                      scrollToElement("refuerzo-academico", "refuerzo-card")
+                    }
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
@@ -171,7 +240,13 @@ export default function Footer() {
                       Club de tareas
                     </Typography>
                   </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() =>
+                      scrollToElement("refuerzo-academico", "refuerzo-card")
+                    }
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
@@ -180,7 +255,11 @@ export default function Footer() {
                       Area de exactas
                     </Typography>
                   </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() => scrollToElement("danzas", "danzas-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
@@ -189,7 +268,24 @@ export default function Footer() {
                       Belly dance
                     </Typography>
                   </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() => scrollToElement("danzas", "danzas-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
+                    <Typography
+                      variant="caption"
+                      component={"p"}
+                      color={bgColorPaper}
+                    >
+                      Danzas polinesias
+                    </Typography>
+                  </motion.a>
+                  <motion.a
+                    onClick={() => scrollToElement("deporte", "deporte-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
@@ -208,6 +304,8 @@ export default function Footer() {
                     gap={convertClasesToColumn ? "25px" : "10px"}
                   >
                     <motion.a
+                      href="https://www.facebook.com/CADI.MINATITLAN/"
+                      target="_blank"
                       whileHover={{ scale: 1.25 }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -226,6 +324,8 @@ export default function Footer() {
                       </Box>
                     </motion.a>
                     <motion.a
+                      href="https://www.instagram.com/cadi_minatitlan/"
+                      target="_blank"
                       whileHover={{ scale: 1.25 }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -244,6 +344,8 @@ export default function Footer() {
                       </Box>
                     </motion.a>
                     <motion.a
+                      href="https://wa.me/529211413080?text=Quiero%20solicitar%20informes."
+                      target="_blank"
                       whileHover={{ scale: 1.25 }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -280,6 +382,8 @@ export default function Footer() {
               {!invertFooterDirections && (
                 <Stack height={"100%"} justifyContent={"space-around"}>
                   <motion.a
+                    href="https://www.facebook.com/p/CADI-SPORT-Polideportivo-100057382873097/"
+                    target="_blank"
                     whileHover={{ scale: 1.25 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -298,6 +402,8 @@ export default function Footer() {
                     </Box>
                   </motion.a>
                   <motion.a
+                    href="https://www.instagram.com/cadi_polideportivo/"
+                    target="_blank"
                     whileHover={{ scale: 1.25 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -316,6 +422,8 @@ export default function Footer() {
                     </Box>
                   </motion.a>
                   <motion.a
+                    href="https://wa.me/529221146805?text=Quiero%20solicitar%20informes."
+                    target="_blank"
                     whileHover={{ scale: 1.25 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -356,7 +464,11 @@ export default function Footer() {
                   columnGap={invertFooterDirections ? "25px" : "15px"}
                   rowGap={invertFooterDirections ? "10px" : "auto"}
                 >
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() => scrollToElement("gym", "gym-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
@@ -365,7 +477,24 @@ export default function Footer() {
                       Gimnasio mixto
                     </Typography>
                   </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() => scrollToElement("gimnasia", "gimnasia-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
+                    <Typography
+                      variant="caption"
+                      component={"p"}
+                      color={bgColorPaper}
+                    >
+                      Gimnasia artistica
+                    </Typography>
+                  </motion.a>
+                  <motion.a
+                    onClick={() => scrollToElement("boxeo", "boxeo-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
@@ -374,22 +503,17 @@ export default function Footer() {
                       Boxeo
                     </Typography>
                   </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
+                  <motion.a
+                    onClick={() => scrollToElement("kungfu", "kungfu-card")}
+                    className="nav-link"
+                    whileHover={navMotionHover}
+                  >
                     <Typography
                       variant="caption"
                       component={"p"}
                       color={bgColorPaper}
                     >
-                      Kungfu
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Gimnasia artistica
+                      Kung fu
                     </Typography>
                   </motion.a>
                 </Stack>
@@ -402,6 +526,8 @@ export default function Footer() {
                     gap={convertClasesToColumn ? "25px" : "10px"}
                   >
                     <motion.a
+                      href="https://www.facebook.com/p/CADI-SPORT-Polideportivo-100057382873097/"
+                      target="_blank"
                       whileHover={{ scale: 1.25 }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -420,6 +546,8 @@ export default function Footer() {
                       </Box>
                     </motion.a>
                     <motion.a
+                      href="https://www.instagram.com/cadi_polideportivo/"
+                      target="_blank"
                       whileHover={{ scale: 1.25 }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -438,6 +566,8 @@ export default function Footer() {
                       </Box>
                     </motion.a>
                     <motion.a
+                      href="https://wa.me/529221146805?text=Quiero%20solicitar%20informes."
+                      target="_blank"
                       whileHover={{ scale: 1.25 }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -464,292 +594,3 @@ export default function Footer() {
     </>
   );
 }
-
-/**
- * <Stack
-              direction={"row"}
-              width={"100%"}
-              height={"100%"}
-              paddingRight={"125px"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              gap={"35px"}
-            >
-              <Stack
-                width={"250px"}
-                height={"100%"}
-                direction={"row"}
-                justifyContent={"end"}
-                alignItems={"center"}
-              >
-                <Stack gap={"20px"}>
-                  <motion.a
-                    whileHover={{ scale: 1.25 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Box
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                        backgroundColor: theme.palette.primary.main,
-                      }}
-                    >
-                      <Icon
-                        icon="logos:facebook"
-                        style={{ width: "100%", height: "100%" }}
-                      />
-                    </Box>
-                  </motion.a>
-                  <motion.a
-                    whileHover={{ scale: 1.25 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Box
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        display: "flex",
-                        borderRadius: "50%",
-                      }}
-                    >
-                      <Icon
-                        icon="skill-icons:instagram"
-                        style={{ width: "100%", height: "100%" }}
-                      />
-                    </Box>
-                  </motion.a>
-                  <motion.a
-                    whileHover={{ scale: 1.25 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Box
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                      }}
-                    >
-                      <Icon
-                        icon="logos:whatsapp-icon"
-                        style={{ width: "100%", height: "100%" }}
-                      />
-                    </Box>
-                  </motion.a>
-                </Stack>
-              </Stack>
-              <Stack height={"100%"}>
-                <motion.span whileHover={{ y: [0, -5, 0, -5] }}>
-                  <Typography
-                    variant="h6"
-                    component={"p"}
-                    color={theme.palette.background.paper}
-                    textAlign={"center"}
-                    marginRight={"50px"}
-                  >
-                    Clases
-                  </Typography>
-                </motion.span>
-                <Stack flexWrap={"wrap"} height={"80%"} columnGap={"15px"}>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Ingles
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Frances
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Musica
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Dibujo y pintura
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Club de tareas
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Area de exactas
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Belly dance
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Kung fu
-                    </Typography>
-                  </motion.a>
-                </Stack>
-              </Stack>
-            </Stack>
- */
-
-/**
- * <Stack
-              direction={"row"}
-              width={"100%"}
-              height={"100%"}
-              paddingLeft={"25px"}
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Stack>
-                <motion.span whileHover={{ y: [0, -5, 0, -5] }}>
-                  <Typography
-                    variant="h6"
-                    component={"p"}
-                    color={theme.palette.background.paper}
-                    textAlign={"center"}
-                    marginRight={"50px"}
-                  >
-                    Ejercicios
-                  </Typography>
-                </motion.span>
-                <Stack flexWrap={"wrap"} height={"80%"} columnGap={"15px"}>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Gimnasio mixto
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Boxeo
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Kungfu
-                    </Typography>
-                  </motion.a>
-                  <motion.a className="nav-link" whileHover={navMotionHover}>
-                    <Typography
-                      variant="caption"
-                      component={"p"}
-                      color={bgColorPaper}
-                    >
-                      Gimnasia artistica
-                    </Typography>
-                  </motion.a>
-                </Stack>
-              </Stack>
-              <Stack
-                width={"250px"}
-                height={"100%"}
-                justifyContent={"start"}
-                alignItems={"start"}
-                gap={"10px"}
-              >
-                <Stack gap={"20px"}>
-                  <motion.a
-                    whileHover={{ scale: 1.25 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Box
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                        backgroundColor: theme.palette.primary.main,
-                      }}
-                    >
-                      <Icon
-                        icon="logos:facebook"
-                        style={{ width: "100%", height: "100%" }}
-                      />
-                    </Box>
-                  </motion.a>
-                  <motion.a
-                    whileHover={{ scale: 1.25 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Box
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        display: "flex",
-                        borderRadius: "50%",
-                      }}
-                    >
-                      <Icon
-                        icon="skill-icons:instagram"
-                        style={{ width: "100%", height: "100%" }}
-                      />
-                    </Box>
-                  </motion.a>
-                  <motion.a
-                    whileHover={{ scale: 1.25 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Box
-                      sx={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                      }}
-                    >
-                      <Icon
-                        icon="logos:whatsapp-icon"
-                        style={{ width: "100%", height: "100%" }}
-                      />
-                    </Box>
-                  </motion.a>
-                </Stack>
-              </Stack>
-            </Stack>
- */

@@ -25,10 +25,11 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import cadiImg from "@images/cadi_white.png";
+import useUtils from "@/states/utilsState";
 
-type ArtesCardsKeys =
+export type ArtesCardsKeys =
   | "idiomas"
   | "refuerzo-academico"
   | "artes"
@@ -58,31 +59,37 @@ export default function Index() {
   };
   const clasesRef = useRef<HTMLDivElement | null>(null);
 
+  const { selectedId } = useUtils();
   const [artesSelectedId, setArtesSelectedId] = useState<string | null>(null);
   const artesItems: ArtesItems[] = [
-    { id: "idiomas", title: "Idiomas", subtitle: "Clases de idiomas" },
+    { id: "idiomas", title: "idiomas-card", subtitle: "Clases de idiomas" },
     {
       id: "refuerzo-academico",
-      title: "Refuerzo academico",
+      title: "refuerzo-card",
       subtitle: "Refuerzo academico",
     },
     {
       id: "artes",
-      title: "Refuerzo academico",
+      title: "artes-card",
       subtitle: "Refuerzo academico",
     },
     {
       id: "danzas",
-      title: "Refuerzo academico",
+      title: "danzas-card",
       subtitle: "Refuerzo academico",
     },
     {
       id: "deporte",
-      title: "Refuerzo academico",
+      title: "deporte-card",
       subtitle: "Refuerzo academico",
     },
     // Puedes agregar más elementos aquí
   ];
+
+  useEffect(() => {
+    console.log("Sel: ", selectedId);
+    setArtesSelectedId(selectedId);
+  }, [selectedId]);
 
   const primaryColor = useMemo(() => theme.palette.primary.main, [theme]);
   const secondaryColor = useMemo(() => theme.palette.secondary.main, [theme]);
@@ -193,7 +200,9 @@ export default function Index() {
           </motion.span>
         </motion.div>
       </motion.div>
+      {/*Quienes somos*/}
       <motion.div
+        id="quienes-somos"
         style={{
           minHeight: HEIGHT_RESTANTE,
           position: "relative",
@@ -337,7 +346,9 @@ export default function Index() {
         </Stack>
       </motion.div>
       <Divider />
+      {/*Clases*/}
       <motion.div
+        id="clases"
         ref={clasesRef}
         style={{
           minHeight: HEIGHT_RESTANTE,
@@ -386,7 +397,11 @@ export default function Index() {
           </motion.span>
           <Grid container width={"100%"} height={"100%"} spacing={5}>
             {artesItems.map((item: ArtesItems) => (
-              <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+              <Grid
+                key={item.id}
+                id={item.title}
+                size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+              >
                 <ExpandableCard id={item.id} setSelectedId={setArtesSelectedId}>
                   {artesExpandableCards[item.id]}
                 </ExpandableCard>
@@ -410,7 +425,9 @@ export default function Index() {
         </Stack>
       </motion.div>
       <Divider />
+      {/*Polideportivo*/}
       <motion.div
+        id="polideportivo"
         style={{
           height: "auto",
           minHeight: HEIGHT_RESTANTE,
@@ -453,7 +470,7 @@ export default function Index() {
             </Typography>
           </motion.span>
           <Grid container width={"100%"} height={"100%"} spacing={5}>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid id="gym-card" size={{ xs: 12, sm: 6 }}>
               <motion.div
                 style={{
                   position: "relative",
@@ -489,7 +506,7 @@ export default function Index() {
                 </Typography>
               </motion.div>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid id="gimnasia-card" size={{ xs: 12, sm: 6 }}>
               <motion.div
                 style={{
                   position: "relative",
@@ -525,7 +542,7 @@ export default function Index() {
                 </Typography>
               </motion.div>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid id="boxeo-card" size={{ xs: 12, sm: 6 }}>
               <motion.div
                 style={{
                   position: "relative",
@@ -560,7 +577,7 @@ export default function Index() {
                 </Typography>
               </motion.div>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid id="kungfu-card" size={{ xs: 12, sm: 6 }}>
               <motion.div
                 style={{
                   position: "relative",
@@ -600,6 +617,7 @@ export default function Index() {
       </motion.div>
       <Divider />
       <motion.div
+        id="contacto"
         style={{
           minHeight: HEIGHT_RESTANTE,
           position: "relative",

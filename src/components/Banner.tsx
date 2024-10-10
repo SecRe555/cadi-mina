@@ -19,7 +19,7 @@ import {
   useTheme,
 } from "@mui/material";
 import logo from "@images/logo_h_blanco.png";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
@@ -42,6 +42,21 @@ export default function Banner() {
   const [openCollapse, setOpenCollapse] = useState(false);
   const handleCollapseClick = () => {
     setOpenCollapse(!openCollapse);
+  };
+
+  const scrollToElement = (elementId: string) => {
+    const offset = 75;
+    const element = document.getElementById(elementId);
+    if (element) {
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY; // Calcula la posición del elemento
+      const offsetPosition = elementPosition - offset; // Aplica el offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth", // Hace el scroll suave
+      });
+    }
   };
 
   const bgColorPaper = useMemo(() => theme.palette.background.paper, []);
@@ -163,7 +178,9 @@ export default function Banner() {
                         >
                           <List component="div" disablePadding>
                             <ListItem disablePadding>
-                              <ListItemButton>
+                              <ListItemButton
+                                onClick={() => alert("No disponible aún")}
+                              >
                                 <ListItemText
                                   primary={"CADI Clases"}
                                   sx={{
@@ -174,7 +191,14 @@ export default function Banner() {
                               </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
-                              <ListItemButton>
+                              <ListItemButton
+                                onClick={() =>
+                                  window.open(
+                                    "https://gym.cadi-minatitlan.site",
+                                    "_self"
+                                  )
+                                }
+                              >
                                 <ListItemText
                                   primary={"CADI Polideportivo"}
                                   sx={{
@@ -188,7 +212,12 @@ export default function Banner() {
                         </Collapse>
                         <Divider />
                         <ListItem disablePadding>
-                          <ListItemButton>
+                          <ListItemButton
+                            onClick={() => {
+                              toggleDrawer(false)();
+                              scrollToElement("quienes-somos");
+                            }}
+                          >
                             <ListItemText
                               primary={"¿Quienes somos?"}
                               sx={{ display: "flex", justifyContent: "center" }}
@@ -196,7 +225,12 @@ export default function Banner() {
                           </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                          <ListItemButton>
+                          <ListItemButton
+                            onClick={() => {
+                              toggleDrawer(false)();
+                              scrollToElement("clases");
+                            }}
+                          >
                             <ListItemText
                               primary={"Clases"}
                               sx={{ display: "flex", justifyContent: "center" }}
@@ -204,7 +238,12 @@ export default function Banner() {
                           </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                          <ListItemButton>
+                          <ListItemButton
+                            onClick={() => {
+                              toggleDrawer(false)();
+                              scrollToElement("polideportivo");
+                            }}
+                          >
                             <ListItemText
                               primary={"Polideportivo"}
                               sx={{ display: "flex", justifyContent: "center" }}
@@ -212,7 +251,12 @@ export default function Banner() {
                           </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                          <ListItemButton>
+                          <ListItemButton
+                            onClick={() => {
+                              toggleDrawer(false)();
+                              scrollToElement("contacto");
+                            }}
+                          >
                             <ListItemText
                               primary={"Contacto"}
                               sx={{ display: "flex", justifyContent: "center" }}
@@ -231,7 +275,7 @@ export default function Banner() {
                     whileInView={{ scale: reduceNavFontSize ? 0.9 : 1 }}
                   >
                     <Link
-                      onClick={() => {}}
+                      onClick={() => scrollToElement("quienes-somos")}
                       color={theme.palette.background.paper}
                     >
                       <Typography
@@ -248,7 +292,7 @@ export default function Banner() {
                     whileTap={{ scale: 0.9 }}
                   >
                     <Link
-                      onClick={() => {}}
+                      onClick={() => scrollToElement("clases")}
                       color={theme.palette.background.paper}
                     >
                       <Typography
@@ -265,7 +309,7 @@ export default function Banner() {
                     whileTap={{ scale: 0.9 }}
                   >
                     <Link
-                      onClick={() => {}}
+                      onClick={() => scrollToElement("polideportivo")}
                       color={theme.palette.background.paper}
                     >
                       <Typography
@@ -282,7 +326,7 @@ export default function Banner() {
                     whileTap={{ scale: 0.9 }}
                   >
                     <Link
-                      onClick={() => {}}
+                      onClick={() => scrollToElement("contacto")}
                       color={theme.palette.background.paper}
                     >
                       <Typography
@@ -311,8 +355,19 @@ export default function Banner() {
                       anchorEl={anchorEl}
                       onClose={handleClose}
                     >
-                      <MenuItem>Clases</MenuItem>
-                      <MenuItem>Gimnasio</MenuItem>
+                      <MenuItem onClick={() => alert("No disponible aun")}>
+                        Clases
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() =>
+                          window.open(
+                            "https://gym.cadi-minatitlan.site",
+                            "_self"
+                          )
+                        }
+                      >
+                        Polideportivo
+                      </MenuItem>
                     </Menu>
                   </motion.div>
                 </>
