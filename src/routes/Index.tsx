@@ -26,8 +26,11 @@ import {
 import Grid from "@mui/material/Grid2";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
+import mainbg from "@images/main-fondo.png";
 import cadiImg from "@images/cadi_white.png";
 import useUtils from "@/states/utilsState";
+import { Swiper, SwiperSlide } from "swiper/react";
+import Slider from "@/components/Slider";
 
 export type ArtesCardsKeys =
   | "idiomas"
@@ -140,9 +143,10 @@ export default function Index() {
             width: "100%",
             height: "100%",
             zIndex: -1,
-            background: `linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), url(${"https://picsum.photos/1920/1080"})`,
-            backgroundSize: "cover",
+            background: `linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), url(${mainbg})`,
+            backgroundSize: "100% 100%",
             backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
           }}
         />
         <motion.div
@@ -408,7 +412,6 @@ export default function Index() {
               </Grid>
             ))}
           </Grid>
-
           <AnimatePresence>
             {artesSelectedId && (
               <ExpandedCard
@@ -613,6 +616,14 @@ export default function Index() {
               </motion.div>
             </Grid>
           </Grid>
+          <motion.div
+            style={{ marginTop: "50px" }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Slider />
+          </motion.div>
         </Stack>
       </motion.div>
       <Divider />

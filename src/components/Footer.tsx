@@ -1,12 +1,4 @@
-import {
-  Box,
-  Divider,
-  Link,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
